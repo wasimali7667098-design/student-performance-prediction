@@ -23,21 +23,40 @@ async function predict() {
     }
 
     try {
-        const response = await fetch("/predict", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                hours: values[0],
-                marks: values[1],
-                attendance: values[2]
-            })
-        });
+        let data;
+        if (window.location.hostname.endsWith(".github.io")) {
+            const prediction =
+                9.222583126763006 +
+                2.9813659287118552 * values[0] +
+                0.7176852722454908 * values[1] +
+                0.017163860158987583 * values[2];
+            const predictedMarks = Math.round(Math.max(0, Math.min(100, prediction)) * 100) / 100;
 
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.error || "Server error: " + response.status);
+            data = {
+                predicted_marks: predictedMarks,
+                performance: predictedMarks >= 75
+                    ? "Excellent"
+                    : predictedMarks >= 40
+                        ? "Average"
+                        : "Needs Improvement"
+            };
+        } else {
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    hours: values[0],
+                    marks: values[1],
+                    attendance: values[2]
+                })
+            });
+
+            data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || "Server error: " + response.status);
+            }
         }
 
         if (!Number.isFinite(data.predicted_marks) || typeof data.performance !== "string") {
