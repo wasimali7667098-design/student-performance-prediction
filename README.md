@@ -35,4 +35,7 @@ study hours from 0 to 24 and previous marks and attendance from 0 to 100.
 See [research-paper.md](research-paper.md) for a course-project paper draft.
 It includes a reproducible cross-validation comparison; run
 `python evaluate_model.py` to verify the reported metrics.
+For an IEEE conference-style LaTeX draft, see [research-paper-ieee.tex](research-paper-ieee.tex).
+Replace all author placeholders and check the target conference's current
+template, page limit, and submission rules before submitting.
 For an oral presentation, see [presentation-notes.md](presentation-notes.md).

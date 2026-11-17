@@ -1,0 +1,132 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{A Flask-Based Student Performance Prediction Prototype Using Linear Regression}
+
+\author{
+\IEEEauthorblockN{[Student Name]}
+\IEEEauthorblockA{
+[Department], [College]\\
+[City, Country]\\
+[Email Address]
+}
+}
+
+\maketitle
+
+\begin{abstract}
+This paper describes a small web application that estimates a student's final
+mark from study hours, previous marks, and attendance. A linear regression
+model is trained on the 15 records in the project's included CSV file and
+served through a Flask API. Leave-one-out cross-validation (LOOCV) gives a
+mean absolute error (MAE) of 0.640 marks, a root mean squared error (RMSE) of
+0.857 marks, and an $R^2$ of 0.998. A mean-prediction baseline gives an MAE of
+16.648 marks, an RMSE of 19.563 marks, and an $R^2$ of -0.148. These results
+describe only the included sample. Its source is undocumented and it contains
+only 15 observations; therefore, the scores do not establish that the model
+will generalize to other students. The application is presented as an
+educational prototype, not as a validated grading or decision-making system.
+\end{abstract}
+
+\begin{IEEEkeywords}
+student performance, linear regression, Flask, cross-validation, educational
+prototype
+\end{IEEEkeywords}
+
+\section{Introduction}
+Predicting student performance is a useful way to learn how a dataset, a
+machine-learning model, and a web application work together. This project
+uses study hours, previous marks, and attendance to estimate final marks.
+Its purpose is to demonstrate a basic regression workflow rather than to
+assess students or replace an instructor's judgment.
+
+\section{System and Method}
+\subsection{Dataset}
+The included file, \texttt{students.csv}, contains 15 records and four numeric
+columns: study hours, previous marks, attendance, and final marks. The first
+three columns are the model features, and final marks is the prediction
+target. The data source and collection method are not documented. The results
+are therefore treated as exploratory results on demonstration data, not as
+evidence from a defined student population.
+
+\subsection{Regression Model}
+The model is scikit-learn's ordinary least-squares \texttt{LinearRegression},
+which estimates a weighted sum of input features [1]. Fitted on all 15 rows,
+the approximate equation is
+\begin{equation}
+\hat{y} = 9.223 + 2.981h + 0.718m + 0.017a,
+\end{equation}
+where $h$ is study hours, $m$ is previous marks, and $a$ is attendance.
+These fitted coefficients describe this dataset; they do not establish
+causation. The application limits the displayed prediction to the range
+0--100 and assigns a performance label using fixed thresholds.
+
+\subsection{Web Application}
+The browser interface collects the three numeric inputs and sends them to a
+Flask \texttt{/predict} endpoint. The server checks that each input is
+present, finite, and within its allowed range before making a prediction.
+The student's name is displayed in the browser and is not included in the
+prediction request.
+
+\section{Evaluation}
+LOOCV was used because the dataset is small. Each of the 15 records is held
+out once, and the model is trained on the other 14 records for that fold.
+Cross-validation makes use of the available records but does not replace
+testing on a larger independent dataset [2]. The same procedure was applied
+to a baseline that predicts the mean final mark of the training fold. Metrics
+were computed over all 15 held-out predictions. The results can be reproduced
+by running \texttt{python evaluate\_model.py}.
+
+\begin{table}[htbp]
+\caption{LOOCV Results on the Included 15-Record Dataset}
+\label{tab:results}
+\centering
+\begin{tabular}{lrrr}
+\hline
+Model & MAE & RMSE & $R^2$ \\
+\hline
+Linear regression & 0.640 & 0.857 & 0.998 \\
+Mean baseline & 16.648 & 19.563 & -0.148 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+On the included records, linear regression has lower prediction errors than
+the mean baseline. This comparison is useful for understanding the prototype,
+but the very small sample and undocumented data origin limit what can be
+concluded. The results may reflect a pattern in these rows and should not be
+presented as verified accuracy for students outside this dataset. The three
+features also omit many circumstances that may affect learning.
+
+\section{Limitations and Responsible Use}
+The dataset contains only 15 records, its source is undocumented, and no
+independent test set is available. The model is a simple linear model and the
+selected features cannot represent a student's full circumstances. A
+prediction should not be used as an official grade or for a high-stakes
+decision. A responsible follow-up would document data provenance, obtain
+permission for data use, collect a larger and appropriate dataset, protect
+student privacy, and evaluate on independent records.
+
+\section{Conclusion}
+This mini-project connects a CSV dataset, a linear regression model, a Flask
+API, and a browser interface. LOOCV on the included records shows lower errors
+than a mean baseline, but the result is limited to this small,
+undocumented dataset. The project is a learning prototype; further data
+collection and independent evaluation would be necessary before making
+real-world claims.
+
+\begin{thebibliography}{00}
+\bibitem{sklearn-linear}
+Scikit-learn developers, ``Linear Models,'' \emph{Scikit-learn User Guide}.
+[Online]. Available: https://scikit-learn.org/stable/modules/linear\_model.html
+
+\bibitem{sklearn-cv}
+Scikit-learn developers, ``Cross-validation: evaluating estimator
+performance,'' \emph{Scikit-learn User Guide}. [Online]. Available:
+https://scikit-learn.org/stable/modules/cross\_validation.html
+\end{thebibliography}
+
+\end{document}
