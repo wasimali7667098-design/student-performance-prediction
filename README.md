@@ -30,6 +30,15 @@ python train_model.py
 The included CSV is the example training dataset. The prediction API accepts
 study hours from 0 to 24 and previous marks and attendance from 0 to 100.
 
+## Public website
+
+Try the live demo: <https://wasimali7667098-design.github.io/student-performance-prediction/>.
+
+The GitHub Pages version runs directly in the browser using the coefficients
+from the included trained model; it does not require a running Flask server.
+The Flask API remains available when running the project locally. If you
+retrain the model, update the coefficients in `static/script.js` as well.
+
 ## Project report
 
 See [research-paper.md](research-paper.md) for a course-project paper draft.
