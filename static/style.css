@@ -1,0 +1,125 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #242424;
+    background: #f3efe5;
+    padding: 36px 20px;
+}
+
+.container {
+    max-width: 540px;
+    margin: 28px auto;
+    padding: 36px 40px;
+    background: #fffdf8;
+    border: 1px solid #c9c0ad;
+    border-top: 5px solid #263b53;
+    box-shadow: 0 8px 24px rgba(38, 34, 26, 0.08);
+}
+
+h1 {
+    text-align: center;
+    color: #263b53;
+    margin-bottom: 12px;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+.container > p {
+    text-align: center;
+    color: #716b60;
+    margin-bottom: 28px;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    font-weight: bold;
+    color: #3d3a34;
+}
+
+input {
+    width: 100%;
+    padding: 11px 12px;
+    margin-top: 7px;
+    border: 1px solid #bdb5a6;
+    border-radius: 2px;
+    background: #fffefa;
+    color: #242424;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #263b53;
+    box-shadow: 0 0 0 2px rgba(38, 59, 83, 0.12);
+}
+
+button {
+    width: 100%;
+    padding: 13px 16px;
+    margin-top: 28px;
+    background: #263b53;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+}
+
+button:hover {
+    background: #1b2b3c;
+}
+
+button:focus-visible {
+    outline: 3px solid #a68a58;
+    outline-offset: 3px;
+}
+
+#result {
+    display: none;
+    margin-top: 28px;
+    padding: 18px 20px;
+    background: #f5f1e7;
+    border: 1px solid #d5cbb8;
+    border-left: 4px solid #a68a58;
+}
+
+#result h2 {
+    color: #263b53;
+    margin-bottom: 12px;
+    font-size: 21px;
+    font-weight: normal;
+}
+
+#result p {
+    text-align: left;
+    margin: 8px 0;
+    color: #3d3a34;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 18px 12px;
+    }
+
+    .container {
+        margin: 12px auto;
+        padding: 28px 22px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}
